@@ -21,6 +21,7 @@ let canvas = document.getElementById(`hangmanCanvas`);
 // The following Try-Catch Block will catch the errors thrown
 try {
   // Instantiate a game Object using the Hangman class.
+  let hangman = new Hangman();
 
   // add a submit Event Listener for the to the difficultySelectionForm
   //    get the difficulty input
@@ -29,7 +30,22 @@ try {
   //       2. show the gameWrapper
   //       3. call the game getWordHolderText and set it to the wordHolderText
   //       4. call the game getGuessessText and set it to the guessesText
-  difficultySelectForm.addEventListener(`submit`, function (event) {});
+  difficultySelectForm.addEventListener(`submit`, function (event) {
+    event.preventDefault();
+    hangman.start(difficultySelect.value, function() {
+      // Hide the startWrapper
+      startWrapper.classList.add('d-none');
+
+      // Show the gameWrapper
+      gameWrapper.classList.add('d-block'); //add("d-block")
+
+      // Call the game getWordHolderText and set it to the wordHolderText
+      hangman.getWordHolderText(wordHolderText.value);
+
+      // Call the game getGuessessText and set it to the guessesText
+      hangman.getGuessesText(guessesText.value);
+    });
+  });
 
   // add a submit Event Listener to the guessForm
   //    get the guess input
@@ -44,12 +60,26 @@ try {
   //      2. disable the guessButton
   //      3. show the resetGame button
   // if the game is won or lost, show an alert.
-  guessForm.addEventListener(`submit`, function (e) {});
+  guessForm.addEventListener(`submit`, function (e) {
+    hangman.guess(guessInput.value);
+    wordHolderText = hangman.getWordHolderText();
+    guessesText.innerHTML = hangman.getGuessesText();
+    guessInput.value = "";
+
+    if (hangman.isOver === true) {
+      guessInput.classList.add("d-none");
+      guessButton.classList.add("d-none");
+      resetGame.classList.add("d-block");
+    }
+  });
 
   // add a click Event Listener to the resetGame button
   //    show the startWrapper
   //    hide the gameWrapper
-  resetGame.addEventListener(`click`, function (e) {});
+  resetGame.addEventListener(`click`, function (e) {
+    startWrapper.classList.remove('d-none');
+    gameWrapper.classList.add('d-none');
+  });
 } catch (error) {
   console.error(error);
   alert(error);
