@@ -1,5 +1,3 @@
-const { isEmpty } = require("lodash");
-
 class Hangman {
   constructor(_canvas) {
     if (!_canvas) {
@@ -110,6 +108,17 @@ class Hangman {
   checkWin() {
     // using the word and the guesses array, figure out how many remaining unknowns.
     // if zero, set both didWin, and isOver to true
+    let unknownNumber = this.word.length;
+    for (let i = 0; i < this.guesses.length; i++) {
+      if (this.word.includes(this.guesses[i])) {
+        unknownNumber--;
+      }
+    }
+
+    if (unknownNumber === 0) {
+      this.isOver = true;
+      this.didWin = true;
+    }
   }
 
   /**
@@ -117,7 +126,9 @@ class Hangman {
    * drawHead, drawBody, drawRightArm, drawLeftArm, drawRightLeg, or drawLeftLeg.
    * if the number wrong guesses is 6, then also set isOver to true and didWin to false.
    */
-  onWrongGuess() {}
+  onWrongGuess() {
+
+  }
 
   /**
    * This function will return a string of the word placeholder
@@ -125,7 +136,15 @@ class Hangman {
    * i.e.: if the word is BOOK, and the letter O has been guessed, this would return _ O O _
    */
   getWordHolderText() {
-    return;
+    let strPlaceholder = "";
+    for (let i = 0; i < this.guesses.length; i++) {
+      if (this.word.includes(this.guesses[i])) {
+        strPlaceholder += this.guesses[i];
+      } else {
+        strPlaceholder += "_";
+      }
+    }
+    return strPlaceholder;
   }
 
   /**
@@ -135,7 +154,10 @@ class Hangman {
    * Hint: use the Array.prototype.join method.
    */
   getGuessesText() {
-    return ``;
+    // Join method splits all array elements into a string using a comma by default and accepts 
+    // a separator as a parameter.
+    // Use " " to neatly separate all the elements.
+    return this.guesses.join(" ");;
   }
 
   /**

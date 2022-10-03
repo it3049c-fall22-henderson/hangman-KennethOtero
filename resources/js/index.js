@@ -21,7 +21,7 @@ let canvas = document.getElementById(`hangmanCanvas`);
 // The following Try-Catch Block will catch the errors thrown
 try {
   // Instantiate a game Object using the Hangman class.
-  let hangman = new Hangman();
+  const hangman = new Hangman(canvas);
 
   // add a submit Event Listener for the to the difficultySelectionForm
   //    get the difficulty input
