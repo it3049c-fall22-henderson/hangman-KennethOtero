@@ -30,20 +30,23 @@ try {
   //       2. show the gameWrapper
   //       3. call the game getWordHolderText and set it to the wordHolderText
   //       4. call the game getGuessessText and set it to the guessesText
-  difficultySelectForm.addEventListener(`submit`, function (event) {
+  difficultySelectForm.addEventListener(`submit`, function (event) { //difficultySelectForm.addEventListener(`submit`, function (event) {
+    // Prevent page refresh
     event.preventDefault();
-    hangman.start(difficultySelect.value, function() {
+
+    // Call the start method
+    hangman.start(difficultySelect.value, function () {
       // Hide the startWrapper
-      startWrapper.classList.add('d-none');
+      startWrapper.classList.add('hidden');
 
       // Show the gameWrapper
-      gameWrapper.classList.add('d-block'); //add("d-block")
+      gameWrapper.classList.remove('hidden');
 
       // Call the game getWordHolderText and set it to the wordHolderText
-      hangman.getWordHolderText(wordHolderText.value);
+      wordHolderText.innerHTML = hangman.getWordHolderText();
 
       // Call the game getGuessessText and set it to the guessesText
-      hangman.getGuessesText(guessesText.value);
+      guessesText.innerHTML = hangman.getGuessesText();
     });
   });
 
@@ -61,11 +64,22 @@ try {
   //      3. show the resetGame button
   // if the game is won or lost, show an alert.
   guessForm.addEventListener(`submit`, function (e) {
+    // Prevent page reload
+    e.preventDefault();
+
+    // Get guess input and call the game guess() method
     hangman.guess(guessInput.value);
-    wordHolderText = hangman.getWordHolderText();
+
+    // Set the wordHolderText to the game.getHolderText
+    wordHolderText.innerHTML = hangman.getWordHolderText();
+
+    // Set the guessesText to the game.getGuessesText
     guessesText.innerHTML = hangman.getGuessesText();
+
+    // Clear the guess input field
     guessInput.value = "";
 
+    // Check if the game is over
     if (hangman.isOver === true) {
       guessInput.classList.add("d-none");
       guessButton.classList.add("d-none");
@@ -78,7 +92,7 @@ try {
   //    hide the gameWrapper
   resetGame.addEventListener(`click`, function (e) {
     startWrapper.classList.remove('d-none');
-    gameWrapper.classList.add('d-none');
+    gameWrapper.classList.add('hidden');
   });
 } catch (error) {
   console.error(error);
