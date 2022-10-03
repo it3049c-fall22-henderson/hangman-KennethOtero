@@ -1,3 +1,5 @@
+const { isEmpty } = require("lodash");
+
 class Hangman {
   constructor(_canvas) {
     if (!_canvas) {
@@ -6,6 +8,8 @@ class Hangman {
 
     this.canvas = _canvas;
     this.ctx = this.canvas.getContext(`2d`);
+
+    // Create guesses array, word string, isOver boolean, didWin boolean
   }
 
   /**
@@ -32,11 +36,22 @@ class Hangman {
    */
   start(difficulty, next) {
     // get word and set it to the class's this.word
+    this.getRandomWord(difficulty).word = this.word;
+
     // clear canvas
+    this.clearCanvas();
+
     // draw base
+    this.drawBase();
+
     // reset this.guesses to empty array
+    this.guesses = [];
+
     // reset this.isOver to false
+    this.isOver = false;
+
     // reset this.didWin to false
+    this.didWin = false;
   }
 
   /**
@@ -53,6 +68,43 @@ class Hangman {
     // check if the word includes the guessed letter:
     //    if it's is call checkWin()
     //    if it's not call onWrongGuess()
+
+    // Edge case handling
+    if (letter === "") {
+      throw new Error("nothing was provided");
+    }
+
+    if (/^[a-zA-Z]+$/.test(letter) === false) {
+      throw new Error("please provide only letters");
+    }
+
+    if (letter.length > 1) {
+      throw new Error("please provide only one letter");
+    }
+
+    // Make the letter lowercase
+    letter = letter.toLowerCase();
+
+    // Check if the guesses array has the letter in it already
+    let blnResult = false;
+    for (let i = 0; i < this.guesses; i++) {
+      if (this.guesses[i] === letter) {
+        blnResult = true;
+      }
+    }
+    if (blnResult === false) {
+      throw new Error("letter has been guessed already");
+    }
+
+    // Guesses array does not have the letter in it, so add it to the array
+    this.guesses.push(letter);
+
+    // Check if the letter is in the word and call either checkWin() or onWrongGuess()
+    if (this.word.includes(letter)) {
+      this.checkWin();
+    } else {
+      this.onWrongGuess();
+    }
   }
 
   checkWin() {
