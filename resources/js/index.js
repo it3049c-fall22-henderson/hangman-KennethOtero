@@ -81,9 +81,9 @@ try {
 
     // Check if the game is over
     if (hangman.isOver === true) {
-      guessInput.classList.add("d-none");
-      guessButton.classList.add("d-none");
-      resetGame.classList.add("d-block");
+      guessInput.classList.add("hidden");
+      guessButton.classList.add("hidden");
+      resetGame.classList.remove("hidden");
     }
   });
 

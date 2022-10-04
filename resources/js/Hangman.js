@@ -147,10 +147,20 @@ class Hangman {
     for (let i = 0; i < strArray.length; i++) {
       strArray[i] = "_";
     }
-    strPlaceholder += strArray.join(" ");
 
-    // Replace the underscores with the correctly guessed letters
+    console.log(this.word);
     
+    // Replace the underscores with the correctly guessed letters
+    for (let i = 0; i < this.guesses.length; i++) {
+      // Fix: loop through every occurrence of the correctly guessed letter in the string.
+      // Currently, it just checks the first occurrence.
+      let index = this.word.indexOf(this.guesses[i]);
+      if (index !== -1) {
+        strArray[index] = this.guesses[i];
+      }
+    }
+    
+    strPlaceholder += strArray.join(" ");
     return strPlaceholder;
   }
 
