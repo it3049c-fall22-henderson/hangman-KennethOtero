@@ -187,7 +187,7 @@ class Hangman {
     // Replace the underscores with the correctly guessed letters
     for (let i = 0; i < this.guesses.length; i++) {
       for (let j = 0; j < this.word.length; j++) {
-        if (this.word.charAt(j) == this.guesses[i]) {
+        if (this.word.charAt(j) === this.guesses[i]) {
           strArray[j] = this.guesses[i];
         }
       }
