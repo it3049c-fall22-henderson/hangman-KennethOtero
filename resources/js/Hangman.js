@@ -194,16 +194,38 @@ class Hangman {
   }
 
   drawHead() {
-    this.ctx.fillRect();
+    this.ctx.beginPath();
+    this.ctx.arc(250, 85, 25, 0, Math.PI * 2, true);
+    this.ctx.stroke();
   }
 
-  drawBody() {}
+  drawBody() {
+    this.ctx.beginPath();
+    this.ctx.fillRect(245, 110, 10, 150);
+    this.ctx.stroke();
+  }
 
-  drawLeftArm() {}
+  drawLeftArm() {
+    this.ctx.beginPath();
+    this.ctx.fillRect(175, 110, 80, 10);
+    this.ctx.stroke();
+  }
 
-  drawRightArm() {}
+  drawRightArm() {
+    this.ctx.beginPath();
+    this.ctx.fillRect(245, 110, 80, 10);
+    this.ctx.stroke();
+  }
 
-  drawLeftLeg() {}
+  drawLeftLeg() {
+    this.ctx.beginPath();
+    this.ctx.fillRect(175, 260, 80, 10);
+    this.ctx.stroke();
+  }
 
-  drawRightLeg() {}
+  drawRightLeg() {
+    this.ctx.beginPath();
+    this.ctx.fillRect(245, 260, 80, 10);
+    this.ctx.stroke();
+  }
 }
