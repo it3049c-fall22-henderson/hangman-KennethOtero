@@ -12,6 +12,7 @@ class Hangman {
     this.word = "";
     this.isOver = false;
     this.didWin = false;
+    this.wrongGuesses = 0;
   }
 
   /**
@@ -116,8 +117,10 @@ class Hangman {
     // if zero, set both didWin, and isOver to true
     let unknownNumber = this.word.length;
     for (let i = 0; i < this.guesses.length; i++) {
-      if (this.word.includes(this.guesses[i])) {
-        unknownNumber--;
+      for (let j = 0; j < this.word.length; j++) {
+        if (this.word.charAt(j) == this.guesses[i]) {
+          unknownNumber--;
+        }
       }
     }
 
@@ -133,7 +136,34 @@ class Hangman {
    * if the number wrong guesses is 6, then also set isOver to true and didWin to false.
    */
   onWrongGuess() {
-    
+    // If 6 or more wrong guesses, then the game is lost
+    switch (this.wrongGuesses) {
+      case (0):
+        this.drawHead();
+        break;
+      case (1):
+        this.drawBody();
+        break;
+      case (2):
+        this.drawRightArm();
+        break;
+      case (3):
+        this.drawLeftArm();
+        break;
+      case (4):
+        this.drawRightLeg();
+        break;
+      case (5):
+        this.drawLeftLeg();
+        this.isOver = true;
+        break;
+      default:
+        this.isOver = true;
+        break;
+    }
+
+    // Increment the number of wrong guesses
+    this.wrongGuesses++;
   }
 
   /**
@@ -152,11 +182,10 @@ class Hangman {
     
     // Replace the underscores with the correctly guessed letters
     for (let i = 0; i < this.guesses.length; i++) {
-      // Fix: loop through every occurrence of the correctly guessed letter in the string.
-      // Currently, it just checks the first occurrence.
-      let index = this.word.indexOf(this.guesses[i]);
-      if (index !== -1) {
-        strArray[index] = this.guesses[i];
+      for (let j = 0; j < this.word.length; j++) {
+        if (this.word.charAt(j) == this.guesses[i]) {
+          strArray[j] = this.guesses[i];
+        }
       }
     }
     

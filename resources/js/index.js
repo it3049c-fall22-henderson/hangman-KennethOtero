@@ -81,9 +81,16 @@ try {
 
     // Check if the game is over
     if (hangman.isOver === true) {
-      guessInput.classList.add("hidden");
-      guessButton.classList.add("hidden");
+      // Hide the guess form and show the reset button
+      guessForm.classList.add("hidden");
       resetGame.classList.remove("hidden");
+
+      // Display alert if the game was won or lost
+      if (hangman.didWin === true) {
+        alert("You won the game!");
+      } else {
+        alert("You lost the game.");
+      }
     }
   });
 
@@ -91,8 +98,9 @@ try {
   //    show the startWrapper
   //    hide the gameWrapper
   resetGame.addEventListener(`click`, function (e) {
-    startWrapper.classList.remove('d-none');
-    gameWrapper.classList.add('hidden');
+    location.reload();
+    // startWrapper.classList.remove('hidden');
+    // gameWrapper.classList.add('hidden');
   });
 } catch (error) {
   console.error(error);
