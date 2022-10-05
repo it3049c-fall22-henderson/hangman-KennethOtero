@@ -78,15 +78,18 @@ class Hangman {
 
     // Edge case handling
     if (letter === "") {
-      throw new Error("nothing was provided");
+      alert("Nothing was provided");
+      throw new Error("Nothing was provided.");
     }
 
     if (/^[a-zA-Z]+$/.test(letter) === false) {
-      throw new Error("please provide only letters");
+      alert("Please provide only letters.");
+      throw new Error("Please provide only letters.");
     }
 
     if (letter.length > 1) {
-      throw new Error("please provide only one letter");
+      alert("Please provide only one letter.");
+      throw new Error("Please provide only one letter.");
     }
 
     // Make the letter lowercase
@@ -97,7 +100,8 @@ class Hangman {
     for (let i = 0; i < this.guesses.length; i++) {
       if (this.guesses[i] === letter) {
         hasLetter = true;
-        throw new Error("letter has been guessed already");
+        alert("Letter has been guessed already.");
+        throw new Error("Letter has been guessed already");
       }
     }
 
