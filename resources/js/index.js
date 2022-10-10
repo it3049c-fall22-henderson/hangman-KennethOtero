@@ -130,14 +130,27 @@ const successCallback = (position) => {
   fetch("https://api.geoapify.com/v1/geocode/reverse?lat=" + lat + "&lon=" + lon + "&apiKey=" + key, requestOptions)
   .then(response => response.json())
   .then(result => {
-    const address = result.features[0];
-    alert("Your city is: " + address.properties.city);
+    // const address = result.features[0];
+    // alert("Your city is: " + address.properties.city);
   })
   .catch(error => console.log('error', error));
 
   // Extra credit part 3
   // Display the weather of the user's city
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '3fc32ce605mshb6cd8b983e01c72p1b0cd9jsn666c985c73c2',
+      'X-RapidAPI-Host': 'weatherbit-v1-mashape.p.rapidapi.com'
+    }
+  };
   
+  fetch('https://weatherbit-v1-mashape.p.rapidapi.com/current?lon=' + lon + '&lat=' + lat, options)
+  .then(response => response.json())
+  .then(response => {
+    alert(response.data[0].city_name + " weather: " + response.data[0].weather.description);
+  })
+  .catch(err => console.error(err));
 };
 
 const errorCallback = (error) => {
