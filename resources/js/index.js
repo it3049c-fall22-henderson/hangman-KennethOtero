@@ -111,8 +111,33 @@ try {
 // Module 07 Web APIs Extra Credit
 
 // Get location and display it in the console
+let lat = 0;
+let lon = 0;
 const successCallback = (position) => {
-  console.log(position);
+  // Extra credit part 1
+  // Display the user's location (latitude and longitude)
+  console.log('Latitude: ' + position.coords.latitude + ', Longitude: ' + position.coords.longitude);
+
+  // Extra credit part 2
+  // Display the user's city
+  const key = "e3b1c988d899416bb9ae974f4eb0753f";
+  lat = position.coords.latitude;
+  lon = position.coords.longitude;
+  var requestOptions = {
+    method: 'GET',
+  };
+
+  fetch("https://api.geoapify.com/v1/geocode/reverse?lat=" + lat + "&lon=" + lon + "&apiKey=" + key, requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    const address = result.features[0];
+    alert("Your city is: " + address.properties.city);
+  })
+  .catch(error => console.log('error', error));
+
+  // Extra credit part 3
+  // Display the weather of the user's city
+  
 };
 
 const errorCallback = (error) => {
@@ -120,7 +145,3 @@ const errorCallback = (error) => {
 };
 
 navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-
-// Display the user's city
-
-// Display the weather of the user's city
