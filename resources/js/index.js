@@ -106,3 +106,21 @@ try {
   console.error(error);
   alert(error);
 }
+
+
+// Module 07 Web APIs Extra Credit
+
+// Get location and display it in the console
+const successCallback = (position) => {
+  console.log(position);
+};
+
+const errorCallback = (error) => {
+  console.error(error);
+};
+
+navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+
+// Display the user's city
+
+// Display the weather of the user's city
